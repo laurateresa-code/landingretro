@@ -214,17 +214,18 @@ img { max-width: 100%; height: auto; display: block; }
   letter-spacing: .6px;
   line-height: 1.15;
   font-size: clamp(22px, 3.2vw, 46px);
-  text-shadow: 0 2px 0 rgba(0,0,0,.25), 0 8px 18px rgba(0,0,0,.35);
+  -webkit-text-stroke: 1px #000;
+  paint-order: stroke fill;
   margin: 0 0 4px;
 }
 .feedback__viewport { width: min(1000px, 92vw); overflow: hidden; }
 .feedback__track { display: flex; align-items: stretch; transition: transform 500ms ease; will-change: transform; }
 .feedback__item { flex: 0 0 100%; display: grid; justify-items: center; gap: 10px; padding: 0 24px; }
-.feedback__quote { max-width: 900px; text-align: center; color: #2b2100; font-size: clamp(16px, 2vw, 20px); font-weight: 700; line-height: 1.6; min-height: 3.2em; word-break: break-word; white-space: normal; }
-.feedback__author { color: var(--primary); font-weight: 900; font-size: 18px; }
+.feedback__quote { max-width: 900px; text-align: center; color: #2b2100; font-family: "Lato", sans-serif; font-style: italic; font-size: clamp(16px, 2vw, 20px); font-weight: 300; line-height: 1.6; min-height: 3.2em; word-break: break-word; white-space: normal; }
+.feedback__author { color: var(--primary); font-family: "Lato", sans-serif; font-style: italic; font-weight: 900; font-size: 18px; }
 .feedback__dots { display: flex; gap: 10px; justify-content: center; align-items: center; }
-.feedback__dots .dot { width: 10px; height: 10px; border-radius: 999px; border: none; background: #111; opacity: .3; cursor: pointer; transition: transform 200ms ease, background-color 200ms ease, opacity 200ms ease; }
-.feedback__dots .dot.is-active { transform: scale(1.6); background: #ff007f; opacity: 1; }
+.feedback__dots .dot { width: 8px; height: 8px; padding: 0; border-radius: 50%; border: none; background: #111; opacity: .3; cursor: pointer; transition: transform 200ms ease, background-color 200ms ease, opacity 200ms ease; }
+.feedback__dots .dot.is-active { transform: scale(1.5); background: #ff007f; opacity: 1; }
 
 /* Galeria (Cards de Destaque) */
 .gallery {
