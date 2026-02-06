@@ -1,0 +1,125 @@
+/* FUNDO */
+.site-footer {
+  background: #0c0c0c;
+  color: #fff;
+  padding: 80px 20px 60px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* CONTAINER */
+.footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* TOPO */
+.footer__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* MARCA */
+.footer__brand h2 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.footer__brand span {
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+/* BOTÃO */
+.footer__cta {
+  text-align: center;
+}
+
+.footer__btn {
+  background: linear-gradient(90deg, #ff2e7a, #ff0055);
+  color: #fff;
+  padding: 16px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  display: inline-block;
+  transition: all .3s ease;
+  box-shadow: 0 8px 25px rgba(255, 0, 85, .35);
+}
+
+.footer__btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(255, 0, 85, .55);
+}
+
+/* SOCIAIS */
+.footer__social {
+  display: flex;
+  gap: 14px;
+}
+
+.footer__social a {
+  width: 46px;
+  height: 46px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .25s ease;
+}
+
+/* HOVER — EXPANDE + AMARELO */
+.footer__social a:hover {
+  transform: scale(1.18);
+  background: #ffd200; /* amarelo padrão */
+}
+
+/* ÍCONE */
+.footer__social img {
+  width: 20px;
+  height: 20px;
+  transition: filter .25s ease;
+}
+
+/* MUDA COR DO ÍCONE */
+.footer__social a:hover img {
+  filter: brightness(0) saturate(100%);
+}
+
+/* LINHA */
+.footer__divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,.2);
+  margin: 50px 0 40px;
+}
+
+/* BASE */
+.footer__bottom {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.footer__bottom strong {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+
+  .footer__top {
+    flex-direction: column;
+    text-align: center;
+    gap: 28px;
+  }
+
+}

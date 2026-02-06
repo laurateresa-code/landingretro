@@ -1,9 +1,13 @@
 (function() {
   const track = document.querySelector('.photo-carousel__track');
-  if (!track) return;
+  const trackContainer = document.querySelector('.photo-carousel__track-container');
+  const nextButton = document.querySelector('.photo-carousel__btn--next');
+  const prevButton = document.querySelector('.photo-carousel__btn--prev');
 
-  // Lista de imagens (reutilizando assets existentes para simular 15+ fotos)
-  const images = [
+  if (!track || !trackContainer) return;
+
+  // Lista de imagens
+  const originalImages = [
     'assets/img/Imagens Village/village01.png',
     'assets/img/Imagens Village/village02.png',
     'assets/img/Imagens Village/village03.png',
@@ -18,65 +22,199 @@
     'assets/img/Imagens Village/village12.png'
   ];
 
-  // Preencher o carrossel
-  images.forEach(src => {
+  // Configuração
+  const clonesCount = 4; // Aumentar clones para garantir fluidez em telas largas
+  let slides = [];
+  let currentIndex = clonesCount; // Começa no primeiro slide real
+  let isTransitioning = false;
+  let interval;
+  const transitionDuration = 500; // ms
+
+  // Função auxiliar para criar slide
+  const createSlide = (src, index, type = 'real') => {
     const slide = document.createElement('div');
     slide.classList.add('photo-carousel__slide');
+    slide.dataset.index = index;
+    slide.dataset.type = type;
+    
     const img = document.createElement('img');
     img.src = src;
     img.alt = 'Foto do Village Retrô';
-    img.loading = 'lazy'; // Performance
+    img.loading = 'lazy';
     slide.appendChild(img);
-    track.appendChild(slide);
-  });
+    return slide;
+  };
 
-  const slides = Array.from(track.children);
-  const nextButton = document.querySelector('.photo-carousel__btn--next');
-  const prevButton = document.querySelector('.photo-carousel__btn--prev');
-  let currentIndex = 0;
-  let interval;
+  // Montar carrossel com clones
+  const setupCarousel = () => {
+    // Clones do final para o início
+    const endClones = originalImages.slice(-clonesCount).map((src, i) => 
+      createSlide(src, originalImages.length - clonesCount + i, 'clone-end')
+    );
+    // Clones do início para o final
+    const startClones = originalImages.slice(0, clonesCount).map((src, i) => 
+      createSlide(src, i, 'clone-start')
+    );
+    // Slides reais
+    const realSlides = originalImages.map((src, i) => createSlide(src, i, 'real'));
 
-  const updateCarousel = () => {
-    const slideWidth = slides[0].getBoundingClientRect().width;
-    track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    // Inserir no DOM
+    track.innerHTML = '';
+    [...endClones, ...realSlides, ...startClones].forEach(slide => track.appendChild(slide));
+    
+    slides = Array.from(track.children);
+    
+    // Forçar layout inicial
+    requestAnimationFrame(() => {
+      updateCarousel(false);
+      // Pequeno delay para garantir que classes CSS sejam aplicadas antes de iniciar transições
+      setTimeout(() => {
+        slides[currentIndex].classList.add('active');
+      }, 50);
+    });
+  };
+
+  const getSlidePosition = (index) => {
+    const slide = slides[index];
+    if (!slide) return 0;
+
+    const slideRect = slide.getBoundingClientRect();
+    const containerRect = trackContainer.getBoundingClientRect();
+    const trackRect = track.getBoundingClientRect();
+
+    // Centro do container
+    const containerCenter = containerRect.width / 2;
+    
+    // Centro do slide relativo ao track
+    // offsetLeft é relativo ao pai (track)
+    // Precisamos considerar margens? offsetLeft inclui margem esquerda se o pai tiver padding,
+    // mas aqui slides têm margem. offsetLeft pega a borda esquerda do elemento.
+    // Width inclui padding e border.
+    
+    const slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
+    
+    // Queremos que slideCenter fique em containerCenter
+    // Posição do track (translateX) + slideCenter = containerCenter
+    // translateX = containerCenter - slideCenter
+    
+    return containerCenter - slideCenter;
+  };
+
+  const updateCarousel = (animate = true) => {
+    if (slides.length === 0) return;
+
+    const translateX = getSlidePosition(currentIndex);
+
+    track.style.transition = animate ? `transform ${transitionDuration}ms cubic-bezier(0.25, 1, 0.5, 1)` : 'none';
+    track.style.transform = `translateX(${translateX}px)`;
+
+    // Atualizar classes active
+    slides.forEach(s => s.classList.remove('active'));
+    if (slides[currentIndex]) {
+      slides[currentIndex].classList.add('active');
+    }
+  };
+
+  const jumpTo = (index) => {
+    isTransitioning = true; // Bloqueia inputs durante o pulo silencioso
+    currentIndex = index;
+    track.style.transition = 'none';
+    const translateX = getSlidePosition(currentIndex);
+    track.style.transform = `translateX(${translateX}px)`;
+    
+    // Forçar reflow para garantir que a remoção da transição seja processada
+    track.offsetHeight; 
+    
+    slides.forEach(s => s.classList.remove('active'));
+    slides[currentIndex].classList.add('active');
+    
+    // Liberar flag no próximo frame
+    requestAnimationFrame(() => {
+      isTransitioning = false;
+    });
+  };
+
+  const handleTransitionEnd = (e) => {
+    if (e.target !== track) return;
+    isTransitioning = false;
+    
+    const realCount = originalImages.length;
+    
+    // Lógica de loop infinito
+    // Se estivermos nos clones do início (índices 0 a clonesCount-1)
+    if (currentIndex < clonesCount) {
+      // Pular para o correspondente real no final
+      // Ex: currentIndex = clonesCount - 1 (último clone do início, que é cópia do último slide real)
+      // Deve ir para: clonesCount + realCount - 1
+      const newIndex = currentIndex + realCount;
+      jumpTo(newIndex);
+    } 
+    // Se estivermos nos clones do fim (índices clonesCount + realCount em diante)
+    else if (currentIndex >= clonesCount + realCount) {
+      // Pular para o correspondente real no início
+      // Ex: currentIndex = clonesCount + realCount (primeiro clone do fim, cópia do primeiro slide real)
+      // Deve ir para: clonesCount
+      const newIndex = currentIndex - realCount;
+      jumpTo(newIndex);
+    }
   };
 
   const nextSlide = () => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateCarousel();
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex++;
+    updateCarousel(true);
   };
 
   const prevSlide = () => {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateCarousel();
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex--;
+    updateCarousel(true);
   };
 
   const startAutoScroll = () => {
     stopAutoScroll();
-    interval = setInterval(nextSlide, 4000); // 4 segundos por slide
+    interval = setInterval(nextSlide, 3000);
   };
 
   const stopAutoScroll = () => {
     clearInterval(interval);
   };
 
-  // Event Listeners
-  nextButton.addEventListener('click', () => {
-    nextSlide();
-    startAutoScroll(); // Reinicia o timer ao interagir
+  // Inicialização
+  setupCarousel();
+  
+  track.addEventListener('transitionend', handleTransitionEnd);
+
+  if (nextButton) {
+    nextButton.addEventListener('click', () => {
+      stopAutoScroll();
+      nextSlide();
+      startAutoScroll();
+    });
+  }
+
+  if (prevButton) {
+    prevButton.addEventListener('click', () => {
+      stopAutoScroll();
+      prevSlide();
+      startAutoScroll();
+    });
+  }
+
+  // Pausar no hover
+  trackContainer.addEventListener('mouseenter', stopAutoScroll);
+  trackContainer.addEventListener('mouseleave', startAutoScroll);
+
+  // Resize handling com debounce
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      updateCarousel(false);
+    }, 100);
   });
-
-  prevButton.addEventListener('click', () => {
-    prevSlide();
-    startAutoScroll();
-  });
-
-  // Pausar no hover (opcional, mas boa prática de UX)
-  track.addEventListener('mouseenter', stopAutoScroll);
-  track.addEventListener('mouseleave', startAutoScroll);
-
-  // Resize handling
-  window.addEventListener('resize', updateCarousel);
 
   // Iniciar
   startAutoScroll();
