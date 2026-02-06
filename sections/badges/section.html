@@ -1,0 +1,114 @@
+<!-- ============================
+   SEÇÃO DE SELOS (BADGES)
+   Layout igual à screenshot
+   Animações + sombras
+   ============================ -->
+
+<section class="badges" aria-label="Selos e benefícios">
+  <div class="container badges__inner">
+    <div class="badges__row">
+      <img class="badge-img badge-img--circle" src="https://mkt.villageresort.com.br/wp-content/uploads/elementor/thumbs/Best-of-the-Best-rimg1s3dlwjb3hm19odyy294gbtm6e926i60qw4xcg.png" alt="Selo Tripadvisor Best of the Best" />
+      <img class="badge-img badge-img--circle" src="https://mkt.villageresort.com.br/wp-content/uploads/elementor/thumbs/Travelers-Choice-2025-rimg309sj47s95tv3phfp93sdfrv864g0ktuawbf80.png" alt="Selo Tripadvisor Choice Awards" />
+      <img class="badge-img badge-img--circle" src="https://mkt.villageresort.com.br/wp-content/uploads/elementor/thumbs/Travelers-Choice-2024-rimg49e1n5xjqg0bs8zj0xpwvxlhhn3k6s55c6gixc.png" alt="Selo Tripadvisor 2024" />
+    </div>
+  </div>
+  </section>
+
+
+<style>
+/* Fundo idêntico ao da screenshot */
+.badges {
+  background: #f7d348;
+  padding: 80px 0;
+}
+
+/* GRID PRINCIPAL */
+.badges__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.badges__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* SOMBRA SUAVE */
+.badge-img {
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.15));
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* HOVER (TRAe aceita hover) */
+.badge-img:hover {
+  transform: scale(1.06);
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.22));
+}
+
+/* TAMANHO DOS CIRCULARES */
+.badge-img--circle {
+  width: 190px;
+  height: 190px;
+  object-fit: contain;
+  border-radius: 50%;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Animação flutuando suave */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Selos entram com fade + zoom */
+.badge-img {
+  opacity: 0;
+  animation: fadeZoom 0.7s ease forwards;
+}
+
+/* Atrasos individuais para entrada organizada */
+.badges__row .badge-img:nth-child(1) { animation-delay: 0.2s; }
+.badges__row .badge-img:nth-child(2) { animation-delay: 0.4s; }
+.badges__row .badge-img:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes fadeZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* TAMANHO DO SELO QUADRADO */
+.badge-img--square { display: none; }
+
+/* Remove títulos e textos (como na screenshot) */
+.badge-img h3,
+.badge-img p {
+  display: none !important;
+}
+
+/* =============================
+   RESPONSIVO
+   ============================= */
+
+@media (max-width: 992px) {
+  .badges__row { gap: 40px; }
+}
+
+@media (max-width: 600px) {
+  .badges__row { gap: 30px; }
+}
+</style>

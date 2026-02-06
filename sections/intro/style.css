@@ -1,0 +1,169 @@
+/* =========================
+   INTRO SECTION (Black/Yellow)
+========================= */
+.intro {
+  background-color: #111111; /* Fundo preto conforme imagem */
+  color: #ffffff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.intro .container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* TÍTULO */
+.intro__title {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: #ffde59; 
+  -webkit-text-stroke: 1px #000;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  max-width: 800px;
+}
+
+/* DESCRIÇÃO */
+.intro__desc {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #f0f0f0;
+  max-width: 800px;
+  margin-bottom: 16px;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+  .intro {
+    padding: 40px 16px;
+  }
+  
+  .intro__title {
+    font-size: clamp(20px, 6vw, 24px); /* Reduzido e dinâmico */
+    max-width: 100%;
+    word-wrap: break-word; 
+  }
+
+  .intro__desc {
+    font-size: 14px; 
+    padding: 0 10px;
+  }
+
+  .intro__price-val {
+    font-size: 42px; 
+  }
+
+  .intro__price-old {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+    .intro__title {
+        font-size: 18px; /* Ainda menor para telas muito pequenas */
+    }
+}
+
+/* OFERTA DE PREÇO */
+.intro__offer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.intro__label {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.intro__price-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.intro__price-old {
+  font-size: 18px;
+  color: #ff0064; /* Rosa/Vermelho riscado */
+  text-decoration: line-through;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.intro__price-val {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+  font-size: 64px;
+  color: #ffde59; /* Mesmo amarelo do título */
+  margin: 4px 0;
+  
+  /* Animação de pulso para destaque */
+  animation: pricePulse 2s infinite ease-in-out;
+}
+
+@keyframes pricePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.intro__installments {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+/* BOTÃO CTA */
+.intro__cta {
+  font-size: 16px;
+  padding: 16px 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(255, 0, 100, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  /* Animação de pulso constante */
+  animation: ctaPulse 1.5s infinite ease-in-out;
+  margin-top: 8px; /* Espaçamento extra */
+}
+
+.intro__cta:hover {
+  animation: none; /* Pausa animação no hover para feedback claro */
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 0, 100, 0.6);
+}
+
+@keyframes ctaPulse {
+  0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 0, 100, 0.4); }
+  50% { transform: scale(1.05); box-shadow: 0 10px 25px rgba(255, 0, 100, 0.7); }
+  100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 0, 100, 0.4); }
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+  .intro__title {
+    font-size: 24px;
+  }
+  
+  .intro__price-val {
+    font-size: 48px;
+  }
+}

@@ -1,0 +1,106 @@
+.photo-carousel {
+  width: 100%;
+  padding: 40px 0;
+  background-color: #f9f9f9;
+  overflow: hidden;
+}
+
+.photo-carousel__container {
+  position: relative;
+  max-width: 1400px; /* Largura considerável da página */
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 60px; /* Espaço para as setas */
+}
+
+.photo-carousel__track-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0; /* Retangular */
+  aspect-ratio: 16 / 9; /* Formato retangular */
+  background: #000;
+  position: relative;
+}
+
+.photo-carousel__track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+}
+
+.photo-carousel__slide {
+  min-width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.photo-carousel__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-carousel__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #E91E63; /* Rosa vibrante */
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.photo-carousel__btn:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.photo-carousel__btn svg {
+  width: 48px;
+  height: 48px;
+}
+
+.photo-carousel__btn--prev {
+  left: 0;
+}
+
+.photo-carousel__btn--next {
+  right: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .photo-carousel__container {
+    padding: 0; /* Remove padding lateral para aproveitar largura */
+  }
+  .photo-carousel__track-container {
+    border-radius: 0;
+    aspect-ratio: 4 / 5; /* Mais alto no mobile para não cortar tanto */
+  }
+  .photo-carousel__btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.2); /* Fundo sutil */
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+  }
+  .photo-carousel__btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .photo-carousel__btn svg {
+    width: 24px;
+    height: 24px;
+    fill: #E91E63;
+  }
+  .photo-carousel__btn--prev { left: 10px; }
+  .photo-carousel__btn--next { right: 10px; }
+}

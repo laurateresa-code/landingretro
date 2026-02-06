@@ -1,0 +1,139 @@
+.section-title {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  text-align: center;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  
+  /* Padronização */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  -webkit-text-stroke: 1px #000;
+  paint-order: stroke fill;
+}
+
+ .selectors {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 8px;
+ }
+ .selector-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px; /* Largura fixa para os grupos */
+}
+.qty {
+  display: flex; /* Mudado de inline-flex para flex para respeitar largura */
+  align-items: center;
+  gap: 10px;
+  background: #ffffffee;
+  color: #0f0f10;
+  padding: 10px 14px;
+  border-radius: 999px;
+  box-shadow: 0 2px 0 #00000022 inset;
+  
+  /* Forçar mesmo tamanho */
+  width: 100%; /* Ocupa a largura do pai (selector-group) */
+  justify-content: space-between;
+  box-sizing: border-box; /* Garante que padding não aumente largura */
+ }
+ .qty__label {
+  font-weight: 700;
+  font-family: "Montserrat", Arial, sans-serif;
+ }
+ .qty__value {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 800;
+  font-family: "Montserrat", Arial, sans-serif;
+ }
+ .qty__btn {
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 18px;
+  display: grid; place-items: center;
+  color: #0f0f10;
+ }
+ .qty--dec { background: #bdbdbd; }
+ .qty--inc { background: #55d17a; }
+ .selectors__note {
+  text-align: center;
+  color: #2b2100;
+  font-size: 12px;
+  margin: 6px 0 12px;
+ }
+
+ @media (max-width: 600px) {
+   .selectors {
+     flex-direction: column;
+     align-items: center;
+   }
+   .selector-group {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto; /* Centralizar */
+  }
+}
+
+@media (max-width: 480px) {
+    .calendar__weekdays,
+    .calendar__grid {
+        font-size: 12px;
+        gap: 2px;
+    }
+    .day {
+        height: 36px;
+        line-height: 36px;
+    }
+}
+
+ .calendar__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: 800;
+  font-family: "Montserrat", Arial, sans-serif;
+  margin-bottom: 8px;
+ }
+ .calendar__grid .day {
+  cursor: pointer;
+ }
+ .day.is-selected,
+ .day.in-range {
+  outline: 2px solid #ff0064;
+  background: #fff0f5;
+ }
+ .day.range-start { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+ .day.range-end { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+ .reserve__btn {
+  background: #ff0064;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #b30046;
+  transition: transform 0.1s, box-shadow 0.1s;
+ }
+ .reserve__btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #b30046;
+ }
+ .reserve__btn:disabled,
+ .reserve__btn.is-disabled {
+   background: #ff0064; /* Mantém a cor rosa */
+   color: #fff;
+   cursor: not-allowed;
+   opacity: 1; /* Mantém totalmente visível */
+   pointer-events: none; /* Impede cliques mas mantém visual */
+   box-shadow: 0 4px 0 #b30046; /* Mantém a sombra */
+   transform: none; /* Mantém posição */
+ }
