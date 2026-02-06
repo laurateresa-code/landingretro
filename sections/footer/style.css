@@ -1,15 +1,10 @@
-/* FUNDO */
-.site-footer {
-  background: #0c0c0c;
-  color: #fff;
-  padding: 80px 20px 60px;
-  font-family: 'Montserrat', sans-serif;
-}
-
-/* CONTAINER */
+/* CONTAINER PRINCIPAL */
 .footer__inner {
   max-width: 1200px;
   margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;   /* EMPILHA TOPO + BASE */
 }
 
 /* TOPO */
@@ -18,22 +13,24 @@
   align-items: center;
   justify-content: space-between;
   gap: 40px;
+  width: 100%;
 }
 
-/* MARCA */
-.footer__brand h2 {
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.1;
-  margin: 0;
+/* GARANTE QUE NADA EMPURRE PRA LATERAL */
+.footer__brand,
+.footer__cta,
+.footer__social {
+  flex: 0 0 auto;
 }
 
-.footer__brand span {
-  font-size: 18px;
-  font-weight: 300;
-  letter-spacing: 2px;
+/* LOGO (IMAGEM) */
+.footer__logo {
+  height: 120px; /* Altura ajustada para manter proporção similar ao texto anterior */
+  width: auto;
+  display: block;
 }
 
+/* BOTÃO */
 /* BOTÃO */
 .footer__cta {
   text-align: center;
@@ -51,46 +48,35 @@
   transition: all .3s ease;
   box-shadow: 0 8px 25px rgba(255, 0, 85, .35);
 }
-
-.footer__btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(255, 0, 85, .55);
-}
-
-/* SOCIAIS */
+/* ÍCONES */
 .footer__social {
   display: flex;
   gap: 14px;
 }
 
-.footer__social a {
-  width: 46px;
-  height: 46px;
-  background: #fff;
-  border-radius: 50%;
+.footer__social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all .25s ease;
+  width: 40px;
+  height: 40px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  color: #ff0064; /* Rosa da marca */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
 }
 
-/* HOVER — EXPANDE + AMARELO */
-.footer__social a:hover {
-  transform: scale(1.18);
-  background: #ffd200; /* amarelo padrão */
+.footer__social-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 0, 100, 0.4);
 }
 
-/* ÍCONE */
-.footer__social img {
+.footer__social-link svg {
   width: 20px;
   height: 20px;
-  transition: filter .25s ease;
 }
 
-/* MUDA COR DO ÍCONE */
-.footer__social a:hover img {
-  filter: brightness(0) saturate(100%);
-}
 
 /* LINHA */
 .footer__divider {
@@ -100,26 +86,17 @@
   margin: 50px 0 40px;
 }
 
-/* BASE */
+/* BASE (sempre embaixo) */
 .footer__bottom {
   text-align: center;
-  font-size: 14px;
-  line-height: 1.8;
+  width: 100%;
+  font-size: 12px;
+  font-weight: 300;
+  color: #aaaaaa;
+  line-height: 1.6;
 }
 
 .footer__bottom strong {
-  font-size: 16px;
-  display: block;
-  margin-bottom: 6px;
-}
-
-/* RESPONSIVO */
-@media (max-width: 900px) {
-
-  .footer__top {
-    flex-direction: column;
-    text-align: center;
-    gap: 28px;
-  }
-
+  font-weight: 400; /* Levemente mais forte que o texto base */
+  color: #cccccc;
 }
