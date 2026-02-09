@@ -111,4 +111,11 @@
 @media (max-width: 600px) {
   .badges__row { gap: 30px; }
 }
+
+@media (max-width: 768px) {
+  /* Hide green stickers on mobile, keep only the yellow Best of the Best */
+  .badges__row .badge-img:nth-child(n+2) {
+    display: none;
+  }
+}
 </style>

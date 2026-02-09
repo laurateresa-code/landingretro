@@ -9,7 +9,7 @@
   let targetStr = root.getAttribute('data-target');
   let target = targetStr ? new Date(targetStr) : null;
   if (!target || isNaN(target.getTime())) {
-    target = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    target = new Date(Date.now() + 25 * 60 * 1000);
   }
   const tick = () => {
     const now = new Date();

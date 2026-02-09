@@ -17,13 +17,14 @@
  .countdown__label {
   background: #0f0f10;
   color: var(--white);
-  padding: 8px 16px;
+  padding: 4px 16px;
   border-radius: 999px;
   font-family: "Montserrat", Arial, sans-serif;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: .4px;
   margin-bottom: 8px;
+  margin-top: 5px;
  }
  .countdown__grid {
   display: grid;

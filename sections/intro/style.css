@@ -99,10 +99,45 @@
 
 .intro__price-old {
   font-size: 18px;
-  color: #ff0064; /* Rosa/Vermelho riscado */
-  text-decoration: line-through;
+  color: #FF0000; /* Vermelho Chamativo */
+  text-decoration: none; /* Removido para usar animação customizada */
+  position: relative;
   font-weight: 700;
-  opacity: 0.8;
+  opacity: 1; /* Aumentado para destaque */
+  display: inline-block;
+}
+
+.intro__price-old::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 55%; /* Levemente abaixo do centro visual */
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  
+  /* Animação do traço entrando e saindo */
+  animation: strikeThrough 2s infinite ease-in-out;
+  transform-origin: left;
+}
+
+@keyframes strikeThrough {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  45% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  55% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
 }
 
 .intro__price-val {
@@ -131,30 +166,36 @@
   margin-bottom: 16px;
 }
 
-/* BOTÃO CTA */
-.intro__cta {
+/* BOTÃO DE ALERTA (URGÊNCIA) */
+.intro__alert-btn {
+  background-color: #FF0000 !important; /* Vermelho puro e forçado */
+  color: #fff;
   font-size: 16px;
+  font-weight: 800;
   padding: 16px 32px;
+  border-radius: 50px;
+  border: none;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 4px 15px rgba(255, 0, 100, 0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.8); /* Glow mais intenso */
+  margin-top: 12px;
   
-  /* Animação de pulso constante */
-  animation: ctaPulse 1.5s infinite ease-in-out;
-  margin-top: 8px; /* Espaçamento extra */
+  /* Animação de urgência (pulso rápido) */
+  animation: urgentPulse 1s infinite;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
-.intro__cta:hover {
-  animation: none; /* Pausa animação no hover para feedback claro */
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 20px rgba(255, 0, 100, 0.6);
+.intro__alert-btn:hover {
+  background-color: #cc0000;
+  animation: none;
+  transform: scale(1.05);
 }
 
-@keyframes ctaPulse {
-  0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 0, 100, 0.4); }
-  50% { transform: scale(1.05); box-shadow: 0 10px 25px rgba(255, 0, 100, 0.7); }
-  100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 0, 100, 0.4); }
+@keyframes urgentPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
 }
 
 /* RESPONSIVO */

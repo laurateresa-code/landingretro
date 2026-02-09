@@ -7,27 +7,28 @@
   const next = carousel.querySelector('.carousel-nav.next');
   if (!track || !prev || !next) return;
 
-  const getItemWidth = () => {
-    // Scroll by the width of the container (one group of 3 images)
-    // Or scroll by one item width? User said "cada grupo de imagens fique visível", so scroll by container width.
-    return track.clientWidth + 10; // +10 for gap correction if needed, but smooth scroll handles it
-  };
+  // Cleanup: Remove any leftover clones from previous sessions
+  const clones = track.querySelectorAll('.clone');
+  clones.forEach(c => c.remove());
 
   const scrollNext = () => {
-    // Check if we are at the end
-    // Use a small buffer for float precision
+    // Stride = (ImageWidth 256 + Gap 16) * 3 = 816
+    const stride = 816;
+    
     if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
       track.scrollTo({ left: 0, behavior: 'smooth' });
     } else {
-      track.scrollBy({ left: track.clientWidth + 10, behavior: 'smooth' });
+      track.scrollBy({ left: stride, behavior: 'smooth' });
     }
   };
 
   const scrollPrev = () => {
+    const stride = 816;
+    
     if (track.scrollLeft <= 10) {
       track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
     } else {
-      track.scrollBy({ left: -(track.clientWidth + 10), behavior: 'smooth' });
+      track.scrollBy({ left: -stride, behavior: 'smooth' });
     }
   };
 
@@ -54,5 +55,53 @@
 
   carousel.addEventListener('mouseleave', () => {
     resetTimer();
+  });
+})();
+
+/* --- NEW: Icons Mobile Carousel & Animation --- */
+(() => {
+  const iconsGrid = document.querySelector('.icons-grid');
+  if (!iconsGrid) return;
+
+  // Auto Scroll
+  let iconTimer;
+  const startIconScroll = () => {
+    if (iconTimer) clearInterval(iconTimer);
+    
+    iconTimer = setInterval(() => {
+       // Check if scroll enabled (mainly for mobile)
+       if (iconsGrid.scrollWidth <= iconsGrid.clientWidth) return;
+
+       // Calculate scroll amount: item width + gap
+       const icon = iconsGrid.querySelector('.icon-badge');
+       if (!icon) return;
+       
+       const itemWidth = icon.offsetWidth;
+       // We can just scroll by itemWidth if there's no gap logic in offsetWidth
+       // The CSS gap is 15px.
+       // However, scrollBy works well.
+       
+       // Check if at end
+       if (iconsGrid.scrollLeft + iconsGrid.clientWidth >= iconsGrid.scrollWidth - 10) {
+         iconsGrid.scrollTo({ left: 0, behavior: 'smooth' });
+       } else {
+         // Scroll to next snap point roughly
+         iconsGrid.scrollBy({ left: iconsGrid.clientWidth, behavior: 'smooth' });
+       }
+    }, 3000);
+  };
+
+  // Start logic
+  startIconScroll();
+
+  // Click Animation Logic
+  const icons = iconsGrid.querySelectorAll('.icon-badge');
+  icons.forEach(icon => {
+    icon.addEventListener('click', () => {
+      // Remove class if exists to restart animation
+      icon.classList.remove('shimmer-effect');
+      void icon.offsetWidth; // trigger reflow
+      icon.classList.add('shimmer-effect');
+    });
   });
 })();

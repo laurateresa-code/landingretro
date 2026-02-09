@@ -67,7 +67,17 @@
 @media (max-width: 900px) {
 
   .hero {
-    /* Height overrides removed to respect image aspect ratio */
+    min-height: auto !important; /* Remove altura mínima fixa para mobile */
+    height: auto !important;
+    display: block !important; /* Remove display grid que centraliza verticalmente */
+    background-color: transparent; /* Garante que não haja fundo preto visível */
+  }
+
+  .hero__bg-img {
+    width: 100%;
+    height: auto;
+    display: block; /* Garante que a imagem ocupe o espaço correto */
+    object-fit: cover;
   }
 
   .hero__logo {

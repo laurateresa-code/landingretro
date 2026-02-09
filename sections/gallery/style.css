@@ -12,6 +12,12 @@
   margin-bottom: 24px;
 }
 
+/* VIEWPORT */
+.gallery__viewport {
+  position: relative;
+  width: 100%;
+}
+
 /* ROW */
 .gallery__row {
   display: grid;
@@ -110,4 +116,70 @@
 
 .btn:hover {
   background: #e0266d;
+}
+
+/* NAVIGATION ARROWS (Default hidden) */
+.gallery__nav {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: transparent;
+  border: none;
+  color: #ff0064;
+  padding: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.gallery__nav svg {
+  width: 40px;
+  height: 40px;
+}
+
+.gallery__nav.prev { left: -10px; }
+.gallery__nav.next { right: -10px; }
+
+/* MOBILE CAROUSEL */
+@media (max-width: 768px) {
+  .gallery__viewport {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0; /* Nav arrows sit outside or on edge */
+  }
+
+  .gallery__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery__row {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding-bottom: 10px; /* Space for scrollbar if any */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    grid-template-columns: none; /* Reset grid */
+  }
+
+  .gallery__row::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  .gallery__card {
+    flex: 0 0 100%; /* Full width per card */
+    scroll-snap-align: center;
+    width: 100%;
+    /* Ensure aspect ratio holds */
+    aspect-ratio: 3 / 4; 
+  }
+  
+  /* Show overlay always on mobile or just on click? 
+     Usually hover doesn't work well. Let's make it visible on bottom or ensure click works.
+     The existing CSS .gallery__card:hover .gallery__overlay works on tap on many devices.
+     But user didn't ask to change that. I'll leave it. */
 }
